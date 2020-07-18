@@ -1,7 +1,8 @@
-export const GET_ROUND = 'GET_ROUND'
+export const APPEND_LIST = 'APPEND_LIST'
 
-export const getRound = () => {
+export const appendList = (payload) => {
     return{
-        type: GET_ROUND
+        type: APPEND_LIST,
+        payload: payload
     }
 }

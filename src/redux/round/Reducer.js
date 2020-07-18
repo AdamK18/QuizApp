@@ -1,17 +1,23 @@
-import {GET_ROUND} from './Actions'
+import {APPEND_LIST} from './Actions'
 
-const initialState = {
-    question: 'ASD',
-    answerA: 'ASD',
-    answerB: 'ASD',
-    answerC: 'ASD',
-    answerD: 'ASD'
+const roundState = {
+    list: [
+    {question: 'Question1',
+    answers: ['Answer1','Answer2','Answer3','Answer4'],
+    correct: 1},
+    
+    {question: 'Question2',
+    answers: ['Answer1','Answer2','Answer3','Answer4'],
+    correct: 2,}
+    ]
 }
 
-export const roundReducer = (state = initialState, action) =>{
+export const roundReducer = (state = roundState, action) =>{
     switch(action.type){
-        case GET_ROUND:
-            return state
-        default: return state
+        case APPEND_LIST:
+            state.list.unshift(action.payload)
+            return {...state}
+        default: 
+            return {...state}
     }
 }
