@@ -13,7 +13,6 @@ function App() {
       <BrowserRouter>
         <div className="App">
           <Route exact path='/' component={Home}></Route>
-          <Route path='/main' component={Main}></Route>
           <Route path='/questionform' component={QuestionForm}></Route>
         </div>
       </BrowserRouter>

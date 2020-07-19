@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { appendList } from "../../redux/round/Actions";
+import { appendList, removeFromList } from "../../redux/round/Actions";
 import { Link } from "react-router-dom";
 import QuestionTemplate from '../shared/components/QuestionTemplate'
+import './questionForm.css'
 
-const QuestionForm = ({addQuestion, round}) => {
+const QuestionForm = ({appendList, round, removeItem}) => {
   const [question, setQuestion] = useState("");
   const [answer1, setanswer1] = useState("");
   const [answer2, setanswer2] = useState("");
@@ -44,7 +45,7 @@ const QuestionForm = ({addQuestion, round}) => {
   };
 
   const submitHandler = (e) => {
-    addQuestion({
+    appendList({
       question: question,
       answers: [answer1, answer2, answer3, answer4],
       correct: correct,
@@ -53,35 +54,30 @@ const QuestionForm = ({addQuestion, round}) => {
   };
 
   return (
-    <div>
-
-      <form>
-        <QuestionTemplate id={ids[0]} name={'Question'} value={question} onChange={handleChange.bind(this)}></QuestionTemplate>
-        <QuestionTemplate id={ids[1]} name={'Answer1'} value={answer1} onChange={handleChange.bind(this)}></QuestionTemplate>
-        <QuestionTemplate id={ids[2]} name={'Answer2'} value={answer2} onChange={handleChange.bind(this)}></QuestionTemplate>
-        <QuestionTemplate id={ids[3]} name={'Answer3'} value={answer3} onChange={handleChange.bind(this)}></QuestionTemplate>
-        <QuestionTemplate id={ids[4]} name={'Answer4'} value={answer4} onChange={handleChange.bind(this)}></QuestionTemplate>
-        <QuestionTemplate id={ids[5]} name={'Correct'} value={correct} onChange={handleChange.bind(this)}></QuestionTemplate>
-            
-        <button onClick={submitHandler}>Add</button> <br />
+    <div className="question-main">
+        <form>
+          <QuestionTemplate id={ids[0]} name={'Question'} value={question} onChange={handleChange.bind(this)}></QuestionTemplate>
+          <QuestionTemplate id={ids[1]} name={'Answer1'} value={answer1} onChange={handleChange.bind(this)}></QuestionTemplate>
+          <QuestionTemplate id={ids[2]} name={'Answer2'} value={answer2} onChange={handleChange.bind(this)}></QuestionTemplate>
+          <QuestionTemplate id={ids[3]} name={'Answer3'} value={answer3} onChange={handleChange.bind(this)}></QuestionTemplate>
+          <QuestionTemplate id={ids[4]} name={'Answer4'} value={answer4} onChange={handleChange.bind(this)}></QuestionTemplate>
+          <QuestionTemplate id={ids[5]} name={'Correct'} value={correct} onChange={handleChange.bind(this)}></QuestionTemplate>
+              
+          <button onClick={submitHandler}>Add</button> <br />
         </form>
+        
+        <div className="question-editor">
+          {round.list.map((question, i) => {
+            return(
+                <div className="list-item">
+                    <p>{question.question}</p>
+                    <button>Edit</button>
+                    <button onClick={removeItem.bind(this, i)}>Delete</button>
+                </div>
+            )
+          })}
+        </div>
 
-        
-        {round.list.map((question) => {
-          return(
-              <div>
-                  <p>{question.question}</p>
-                  {question.answers.map(answers =>
-                      <React.Fragment>
-                          <p>{answers}</p>
-                      </React.Fragment>
-                  )}
-                  <p>{question.correct}</p>
-              </div>
-          )
-      })}
-        
-        <br />
         <Link to="/">
           <button type="button">Back</button>
         </Link>
@@ -97,7 +93,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addQuestion: (payload) => dispatch(appendList(payload)),
+    appendList: (payload) => dispatch(appendList(payload)),
+    removeItem: (payload) => dispatch(removeFromList(payload))
   };
 };
 

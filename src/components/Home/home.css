@@ -1,0 +1,21 @@
+.home__content{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.home__game{
+    background-color: #26caa1;
+    width: 80%;
+    height: 80%;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home__manage{
+    margin: 10px;
+}
