@@ -9,13 +9,47 @@
 .home__game{
     background-color: #26caa1;
     width: 80%;
-    height: 80%;
+    height: 70%;
     border-radius: 20px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
+.home__game input{
+    width: 40%;
+}
+
 .home__manage{
     margin: 10px;
+}
+
+.home__enter{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.home__enter input{
+    width: 40%;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.home__enter p{
+    font-size: 1.8rem;
+}
+
+@media screen and (max-width: 768px) {
+    .home__enter input{
+        width: 60%;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    
+    .home__enter p{
+        font-size: 1.2rem;
+    }
 }

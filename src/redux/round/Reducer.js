@@ -1,7 +1,9 @@
 import {APPEND_LIST, REMOVE_ITEM} from './Actions'
 
 const roundState = {
-    list: []
+    list: [
+        
+    ]
 }
 
 export const roundReducer = (state = roundState, action) =>{

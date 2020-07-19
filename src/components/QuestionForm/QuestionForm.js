@@ -4,43 +4,47 @@ import { appendList, removeFromList } from "../../redux/round/Actions";
 import { Link } from "react-router-dom";
 import QuestionTemplate from '../shared/components/QuestionTemplate'
 import './questionForm.css'
+import '../shared/css/shared.css'
 
-const QuestionForm = ({appendList, round, removeItem}) => {
+const QuestionForm = ({ appendList, round, removeItem }) => {
   const [question, setQuestion] = useState("");
-  const [answer1, setanswer1] = useState("");
-  const [answer2, setanswer2] = useState("");
-  const [answer3, setanswer3] = useState("");
-  const [answer4, setanswer4] = useState("");
-  const [correct, setcorrect] = useState("");
+  const [answer1, setAnswer1] = useState("");
+  const [answer2, setAnswer2] = useState("");
+  const [answer3, setAnswer3] = useState("");
+  const [answer4, setAnswer4] = useState("");
+  const [correct, setCorrect] = useState("1");
 
   const ids = ["q", "a1", "a2", "a3", "a4", "c"];
 
   const handleChange = (event) => {
+    console.log(event.target.value)
     switch (event.target.id) {
       case "q": {
         setQuestion(event.target.value);
         break;
       }
       case "a1": {
-        setanswer1(event.target.value);
+        setAnswer1(event.target.value);
         break;
       }
       case "a2": {
-        setanswer2(event.target.value);
+        setAnswer2(event.target.value);
         break;
       }
       case "a3": {
-        setanswer3(event.target.value);
+        setAnswer3(event.target.value);
         break;
       }
       case "a4": {
-        setanswer4(event.target.value);
+        setAnswer4(event.target.value);
         break;
       }
       case "c": {
-        setcorrect(event.target.value);
+        console.log(event.target.value)
+        setCorrect(event.target.value);
         break;
       }
+      default:
     }
   };
 
@@ -53,34 +57,55 @@ const QuestionForm = ({appendList, round, removeItem}) => {
     e.preventDefault();
   };
 
+  const editItem = (i) => {
+    const question = round.list[i]
+    setQuestion(question.question)
+    setAnswer1(question.answers[0])
+    setAnswer2(question.answers[1])
+    setAnswer3(question.answers[2])
+    setAnswer4(question.answers[3])
+    setCorrect(question.correct)
+    removeItem(i)
+  }
+
   return (
     <div className="question-main">
-        <form>
-          <QuestionTemplate id={ids[0]} name={'Question'} value={question} onChange={handleChange.bind(this)}></QuestionTemplate>
-          <QuestionTemplate id={ids[1]} name={'Answer1'} value={answer1} onChange={handleChange.bind(this)}></QuestionTemplate>
-          <QuestionTemplate id={ids[2]} name={'Answer2'} value={answer2} onChange={handleChange.bind(this)}></QuestionTemplate>
-          <QuestionTemplate id={ids[3]} name={'Answer3'} value={answer3} onChange={handleChange.bind(this)}></QuestionTemplate>
-          <QuestionTemplate id={ids[4]} name={'Answer4'} value={answer4} onChange={handleChange.bind(this)}></QuestionTemplate>
-          <QuestionTemplate id={ids[5]} name={'Correct'} value={correct} onChange={handleChange.bind(this)}></QuestionTemplate>
-              
-          <button onClick={submitHandler}>Add</button> <br />
-        </form>
-        
-        <div className="question-editor">
-          {round.list.map((question, i) => {
-            return(
-                <div className="list-item">
-                    <p>{question.question}</p>
-                    <button>Edit</button>
-                    <button onClick={removeItem.bind(this, i)}>Delete</button>
-                </div>
-            )
-          })}
+      <div className="question-editor">
+        {round.list.map((question, i) => {
+          return (
+            <div className="question__list-item question__list-item-different">
+              <p>{question.question}</p>
+              <div className={"question__list-buttons"}>
+                <button onClick={() => editItem(i)}>Edit</button>
+                <button onClick={() => removeItem(i)}>Delete</button>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+
+      <form>
+        <QuestionTemplate id={ids[0]} name={'Question'} value={question} onChange={handleChange.bind(this)}></QuestionTemplate>
+        <QuestionTemplate id={ids[1]} name={'Answer 1'} value={answer1} onChange={handleChange.bind(this)}></QuestionTemplate>
+        <QuestionTemplate id={ids[2]} name={'Answer 2'} value={answer2} onChange={handleChange.bind(this)}></QuestionTemplate>
+        <QuestionTemplate id={ids[3]} name={'Answer 3'} value={answer3} onChange={handleChange.bind(this)}></QuestionTemplate>
+        <QuestionTemplate id={ids[4]} name={'Answer 4'} value={answer4} onChange={handleChange.bind(this)}></QuestionTemplate>
+        <div className={"question__list-item"}>
+          <label>Correct answer</label>
+          <select id={ids[5]} name={'Correct'} onChange={handleChange} value={correct}>
+            <option value="1">Answer 1</option>
+            <option value="2">Answer 2</option>
+            <option value="3">Answer 3</option>
+            <option value="4">Answer 4</option>
+          </select>
         </div>
 
-        <Link to="/">
-          <button type="button">Back</button>
-        </Link>
+        <button onClick={submitHandler}>Add</button> <br />
+      </form>
+
+      <Link to="/">
+        <button type="button">Back</button>
+      </Link>
     </div>
   );
 };

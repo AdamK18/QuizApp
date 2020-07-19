@@ -1,6 +1,5 @@
 import React from 'react';
 import Home from './components/Home/Home'
-import Main from './components/Main/Main'
 import QuestionForm from './components/QuestionForm/QuestionForm'
 import store from './redux/store'
 import {Provider} from 'react-redux'
