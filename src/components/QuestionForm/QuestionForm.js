@@ -54,6 +54,12 @@ const QuestionForm = ({ appendList, round, removeItem }) => {
       answers: [answer1, answer2, answer3, answer4],
       correct: correct,
     });
+    setQuestion("")
+    setAnswer1("")
+    setAnswer2("")
+    setAnswer3("")
+    setAnswer4("")
+    setCorrect("")
     e.preventDefault();
   };
 
@@ -73,11 +79,11 @@ const QuestionForm = ({ appendList, round, removeItem }) => {
       <div className="question-editor">
         {round.list.map((question, i) => {
           return (
-            <div className="question__list-item question__list-item-different">
+            <div key={i} className="question__list-item question__list-item-different">
               <p>{question.question}</p>
               <div className={"question__list-buttons"}>
-                <button onClick={() => editItem(i)}>Edit</button>
-                <button onClick={() => removeItem(i)}>Delete</button>
+                <button className={"edit"} onClick={() => editItem(i)}>Edit</button>
+                <button className={"delete"} onClick={() => removeItem(i)}>Delete</button>
               </div>
             </div>
           )

@@ -7,33 +7,32 @@ import '../shared/css/shared.css'
 export const Main = (props) => {
     const { round, user } = props
     let [score, setScore] = useState(0);
-    let [correct] = useState(false);
     let [current, setCurrent] = useState(0)
-    let [canSkip] = useState(false)
+    let [canSkip, setCanSkip] = useState(false)
     let [questionsOrder] = useState(shuffle(createArrayN(round.list.length)))
+    let [clicked, setClicked] = useState(0);
+    let [checked, setChecked] = useState(false);
 
     let currentQuestion = round.list[questionsOrder[current]];
 
     const check = (i) => {
-        if (currentQuestion.correct == i) {
-            correct = true
-        }
-        else {
-            correct = false
-        }
+        setClicked(i)
+        console.log(round.list[10])
     }
 
     const checkAnswer = () => {
-        if (correct) {
-            correct = false
-            canSkip = true
+        if (clicked != 0) {
+            setChecked(true)
+            setCanSkip(true)
+            if(currentQuestion.correct == clicked) setScore(score + 1)
         }
     }
     const nextQuestion = () => {
         if (canSkip) {
             setCurrent(current + 1)
-            setScore(score + 1)
-            canSkip = false
+            setCanSkip(false)
+            setClicked(0)
+            setChecked(false)
         }
 
     }
@@ -44,8 +43,13 @@ export const Main = (props) => {
                 <p>{currentQuestion.question}</p>
                 <div className="main-game">
                     {currentQuestion.answers.map((answers, i) =>
-                        <React.Fragment>
-                            <button onClick={() => check(i + 1)}>{answers}</button>
+                        <React.Fragment key={i}>
+                            <button className={(clicked == (i+1) ? 'clicked' : '') + " " + 
+                             (checked ? (clicked == (i+1) && currentQuestion.correct == clicked ? 'checked win' : (
+                                 currentQuestion.correct != (i+1) && clicked == (i+1) ? 'checked lose' : (
+                                     currentQuestion.correct == (i+1) ? 'checked win' : 'checked'
+                                 )
+                             )) : '')} onClick={() => check(i + 1)}>{answers}</button>
                         </React.Fragment>
                     )}
                 </div>
@@ -59,17 +63,17 @@ export const Main = (props) => {
 
     return (
         <div className="main">
-            <div className="main-details">
+            <div className={"main-details " + (round.list[questionsOrder[current]] == undefined ? 'hidden' : '')}>
                 <p>Score: {score}</p>
                 <h2>{user.name}</h2>
-                <p>Highscore: {score}</p>
+                <p>Question: {current + 1}/{round.list.length}</p>
             </div>
             {
                 addList()
             }
-            <div className="main-utilities">
-                <button onClick={checkAnswer}>Check</button>
-                <button onClick={nextQuestion}>Next</button>
+            <div className={"main-utilities " + (round.list[questionsOrder[current]] == undefined ? 'hidden' : '')}>
+                <button className={checked ? 'checked' : ''} onClick={checkAnswer}>Check</button>
+                <button className={checked ? '' : 'checked'} onClick={nextQuestion}>Next</button>
             </div>
         </div>
     )

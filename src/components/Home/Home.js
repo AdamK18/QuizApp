@@ -6,8 +6,8 @@ import Main from '../Main/Main'
 import './home.css'
 import '../shared/css/shared.css'
 
-const Home = ({ dispatchName }) => {
-    const [name, setName] = useState('');
+const Home = ({ dispatchName}) => {
+    const [name, setName] = useState("");
     const [showMain, setShowMain] = useState(false);
 
     const nameHandler = (e) => {
@@ -15,10 +15,10 @@ const Home = ({ dispatchName }) => {
     }
 
     const start = () => {
-        /*if(name === ''){
+        if(name === ''){
             alert("Please enter your name")
             return
-        }*/
+        }
         dispatchName(name)
         setShowMain(true)
     }
@@ -42,10 +42,16 @@ const Home = ({ dispatchName }) => {
     )
 }
 
+const mapStateToProps = (state) => {
+    return {
+        user: state.user
+    }
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
         dispatchName: (payload) => dispatch(setUserName(payload))
     }
 };
 
-export default connect(null, mapDispatchToProps)(Home)
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
