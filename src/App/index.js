@@ -1,18 +1,18 @@
 import React from 'react';
-import Home from './components/Home/Home'
-import QuestionForm from './components/QuestionForm/QuestionForm'
-import store from './redux/store'
+import Home from '../screens/Home'
+import QuestionManager from '../screens/QuestionManager'
+import store from '../redux/store'
 import {Provider} from 'react-redux'
 import {BrowserRouter, Route} from 'react-router-dom'
-import './App.css';
+import './styles.css';
 
 function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
         <div className="App">
-          <Route exact path='/' component={Home}></Route>
-          <Route path='/questionform' component={QuestionForm}></Route>
+          <Route exact path='/' component={Home}/>
+          <Route path='/questionmanager' component={QuestionManager}/>
         </div>
       </BrowserRouter>
     </Provider>

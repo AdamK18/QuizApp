@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
+import { setUserName } from '../../redux/user/Actions'
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom'
-import { setUserName } from '../../redux/user/Actions'
-import Main from '../Main/Main'
-import './home.css'
-import '../shared/css/shared.css'
+import Main from '../Main'
+import './styles.css'
+import '../../components/css/shared.css'
 
 const Home = ({ dispatchName}) => {
     const [name, setName] = useState("");
@@ -35,7 +35,7 @@ const Home = ({ dispatchName}) => {
                         <button type="button" onClick={start}>Start</button>
                     </div>}
             </div>
-            <Link to="/questionform" className="home__manage">
+            <Link to="/questionmanager" className="home__manage">
                 <button type="button">Manage questions</button>
             </Link>
         </div>
