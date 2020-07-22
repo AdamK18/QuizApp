@@ -15,7 +15,7 @@ class QuestionManager extends Component {
       answer_2: "",
       answer_3: "",
       answer_4: "",
-      correct: "",
+      correct: "1",
     };
     this.state = this.initialState;
   }

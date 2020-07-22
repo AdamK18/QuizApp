@@ -31,9 +31,9 @@ export class Main extends Component {
   classHidden = () => (this.currentQuestion == undefined ? "hidden" : "");
 
   addList = () => {
-    try {
       const list = (
-        <React.Fragment>
+        this.currentQuestion != undefined ? (
+          <React.Fragment>
           <p>{this.currentQuestion.question}</p>
           <div className="main-game">
             {this.currentQuestion.answers.map((answers, i) => (
@@ -62,11 +62,9 @@ export class Main extends Component {
             ))}
           </div>
         </React.Fragment>
+        ) : 'There are currently no more questions added to the game. Please add some in the manage questions section'
       );
       return list;
-    } catch (e) {
-      return "There are currently no more questions added to the game. Please add some in the manage questions section";
-    }
   };
 
   render() {

@@ -1,8 +1,7 @@
 import { SET_NAME } from "./Actions";
 
 const userState = {
-  userName: "",
-  highscore: 0
+  userName: ""
 };
 
 export const userReducer = (state = userState, action) => {
